@@ -1,24 +1,45 @@
 """
 Insta Flow — AI-Assisted Business Analytics Dashboard
-Retro Desktop Edition v2 — Button groups, proper containment, clean layout.
+Retro Desktop Edition v3 — Theme engine + AI chat PDF export.
 """
 import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
+from theme_engine import get_theme, get_theme_names, THEMES, DEFAULT_THEME
 from styles import get_custom_css
 from data_processor import DataProcessor, DataValidationError
 from analytics_engine import AnalyticsEngine
 from chart_builder import (bar_chart, line_chart, area_chart, pie_chart, donut_chart,
-                           scatter_plot, stacked_bar, histogram, heatmap, CHART_REGISTRY)
+                           scatter_plot, stacked_bar, histogram, heatmap,
+                           CHART_REGISTRY, set_chart_theme)
 from gemini_handler import GeminiHandler
 from pdf_generator import generate_pdf_report
 
 # ─── Page Config ───
 st.set_page_config(page_title="Insta Flow — Business Analytics", page_icon="📊",
                    layout="wide", initial_sidebar_state="expanded")
-st.markdown(get_custom_css(), unsafe_allow_html=True)
+
+# ─── Session State ───
+DEFAULTS = {
+    'gemini_handler': GeminiHandler(), 'data_processor': DataProcessor(),
+    'df': None, 'metadata': None, 'analytics_engine': None,
+    'selected_chart': 'Bar', 'date_range_mode': 'All',
+    'custom_start': None, 'custom_end': None,
+    'ai_summary': None, 'chat_history': [],
+    'selected_metric': None, 'selected_category': None,
+    'env_auto_connected': False,
+    'active_theme': DEFAULT_THEME,
+}
+for k, v in DEFAULTS.items():
+    if k not in st.session_state:
+        st.session_state[k] = v
+
+# ─── Apply Theme ───
+active_theme = st.session_state['active_theme']
+st.markdown(get_custom_css(active_theme), unsafe_allow_html=True)
+set_chart_theme(active_theme)
 
 # ─── Retro HTML helpers ───
 WC = '<div class="retro-wc"><div class="retro-wc-btn">─</div><div class="retro-wc-btn">□</div><div class="retro-wc-btn">✕</div></div>'
@@ -35,20 +56,6 @@ def kpi_html(label, value, delta=""):
 def period_html(title, icon, value, detail):
     return f'<div class="period-card"><div class="period-header">{icon} {title}</div><div class="period-body"><div class="period-value">{value}</div><div class="period-detail">{detail}</div></div></div>'
 
-
-# ─── Session State ───
-DEFAULTS = {
-    'gemini_handler': GeminiHandler(), 'data_processor': DataProcessor(),
-    'df': None, 'metadata': None, 'analytics_engine': None,
-    'selected_chart': 'Bar', 'date_range_mode': 'All',
-    'custom_start': None, 'custom_end': None,
-    'ai_summary': None, 'chat_history': [],
-    'selected_metric': None, 'selected_category': None,
-    'env_auto_connected': False,
-}
-for k, v in DEFAULTS.items():
-    if k not in st.session_state:
-        st.session_state[k] = v
 
 def get_gemini():
     return st.session_state['gemini_handler']
@@ -70,20 +77,11 @@ def status_html():
 
 
 # ═══════════════════════════════════════
-#  SIDEBAR — Button-group controls
+#  SIDEBAR — Controls
 # ═══════════════════════════════════════
 def btn_group(options, key, cols_per_row=3):
     """Render a retro button-group selector with CSS-highlighted active button."""
     current = st.session_state.get(key, options[0])
-
-    # Inject active button highlight via unique key CSS targeting
-    active_key = f"{key}_{current}"
-    st.markdown(f"""<style>
-        button[kind="secondary"][data-testid="stBaseButton-secondary"]:has(+ div) {{}}
-        div[data-testid="stHorizontalBlock"] button {{ }}
-        /* Target by key attribute - Streamlit uses key in the widget tree */
-    </style>""", unsafe_allow_html=True)
-
     rows = [options[i:i+cols_per_row] for i in range(0, len(options), cols_per_row)]
     for row in rows:
         cols = st.columns(len(row))
@@ -99,7 +97,39 @@ def btn_group(options, key, cols_per_row=3):
 
 
 with st.sidebar:
-    # ── Gemini API ──
+    # ══════════ THEME SELECTOR ══════════
+    st.markdown("### 🎨 Appearance")
+    current_theme = st.session_state['active_theme']
+
+    for tname in get_theme_names():
+        tdata = THEMES[tname]
+        is_active = (tname == current_theme)
+        swatches = tdata['swatches']
+
+        # Build swatch HTML
+        swatch_html = ''.join(
+            f'<span style="display:inline-block;width:11px;height:11px;'
+            f'background:{c};border:1px solid #333;margin-right:2px;"></span>'
+            for c in swatches
+        )
+
+        btn_type = "primary" if is_active else "secondary"
+        label = f"{tdata['icon']} {tname}"
+
+        # Color preview + button in columns
+        tc1, tc2 = st.columns([1, 4])
+        with tc1:
+            st.markdown(f'<div style="padding-top:6px;">{swatch_html}</div>',
+                        unsafe_allow_html=True)
+        with tc2:
+            if st.button(label, key=f"theme_{tname}", use_container_width=True,
+                         type=btn_type):
+                st.session_state['active_theme'] = tname
+                st.rerun()
+
+    st.markdown('<hr style="border:1px solid rgba(0,0,0,0.15);margin:6px 0;">', unsafe_allow_html=True)
+
+    # ══════════ GEMINI API ══════════
     st.markdown("### 🔑 Gemini API")
     api_key = st.text_input("Key", type="password", placeholder="Enter API key",
                             label_visibility="collapsed", value=get_gemini().api_key or "")
@@ -123,7 +153,7 @@ with st.sidebar:
             st.info("Disconnected.")
     st.markdown('<p class="disclaimer">Users are responsible for monitoring usage associated with their own Gemini API credentials.</p>', unsafe_allow_html=True)
 
-    # ── Upload ──
+    # ══════════ UPLOAD ══════════
     st.markdown("### 📂 Upload Dataset")
     uploaded = st.file_uploader("CSV", type=['csv'], label_visibility="collapsed")
     if uploaded is not None:
@@ -142,7 +172,7 @@ with st.sidebar:
                     'selected_category': (dp.get_metadata()['categorical_columns'][0]
                                           if dp.get_metadata()['categorical_columns'] else None),
                     'ai_summary': None, 'chat_history': [],
-                    'last_file_name': uploaded.name, 'date_range_mode': 'All Time',
+                    'last_file_name': uploaded.name, 'date_range_mode': 'All',
                 })
                 st.success(f"✓ Loaded {len(df):,} records")
             except DataValidationError as e:
@@ -150,7 +180,7 @@ with st.sidebar:
             except Exception as e:
                 st.error(f"Error: {e}")
 
-    # ── Filters (only when data loaded) ──
+    # ══════════ FILTERS ══════════
     if st.session_state['df'] is not None:
         meta = st.session_state['metadata']
 
@@ -198,7 +228,7 @@ def get_filtered_df():
         start = pd.Timestamp(st.session_state.get('custom_start', df[dc].min()))
         dmax = pd.Timestamp(st.session_state.get('custom_end', dmax))
     else: return df
-    if mode != 'Custom Range':
+    if mode != 'Custom':
         start = pd.Timestamp(start)
     filtered = df[(df[dc] >= start) & (df[dc] <= dmax)]
     if filtered.empty:
@@ -206,7 +236,7 @@ def get_filtered_df():
         return df
     return filtered
 
-# Chart type mapping (short names to registry)
+# Chart type mapping
 CHART_MAP = {
     'Bar': 'Bar Chart', 'Line': 'Line Chart', 'Area': 'Area Chart',
     'Pie': 'Pie Chart', 'Donut': 'Donut Chart', 'Scatter': 'Scatter Plot',
@@ -435,7 +465,9 @@ with st.expander("📋 Dataset Inspector", expanded=False):
 st.markdown(rwin_open("REPORT EXPORT", "📄"), unsafe_allow_html=True)
 re1, re2 = st.columns([3, 1])
 with re1:
-    st.markdown('<p style="font-size:0.8rem;color:#2d2013;margin:0;">Generate a professional PDF report with all-time analysis.</p>', unsafe_allow_html=True)
+    chat_count = sum(1 for r, _ in st.session_state['chat_history'] if r == 'user')
+    chat_note = f" + {chat_count} AI conversations" if chat_count else ""
+    st.markdown(f'<p style="font-size:0.8rem;color:var(--text-body);margin:0;">Generate a professional PDF report with all-time analysis{chat_note}.</p>', unsafe_allow_html=True)
 with re2:
     if st.button("📄 GENERATE PDF REPORT", use_container_width=True, key="pdf_btn"):
         with st.spinner("Generating..."):
@@ -453,8 +485,12 @@ with re2:
                     if ca is not None:
                         figs.append(donut_chart(ca.head(10), names=sel_cat, values=sel_metric,
                             title=f"{sel_metric} by {sel_cat}"))
-                pdf_buf = generate_pdf_report(full_df, dc, meta['numeric_columns'],
-                    meta['categorical_columns'], all_kpis, all_summary, ai_sum, figs)
+                # Pass chat history for PDF export
+                chat_hist = st.session_state.get('chat_history', [])
+                pdf_buf = generate_pdf_report(
+                    full_df, dc, meta['numeric_columns'],
+                    meta['categorical_columns'], all_kpis, all_summary, ai_sum, figs,
+                    chat_history=chat_hist if chat_hist else None)
                 st.download_button("⬇️ Download", data=pdf_buf,
                     file_name=f"InstaFlow_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
                     mime="application/pdf", use_container_width=True)
@@ -464,7 +500,8 @@ with re2:
 st.markdown(rwin_close(), unsafe_allow_html=True)
 
 # ── Footer ──
-st.markdown("""<div class="retro-footer"><p>
+st.markdown(f"""<div class="retro-footer"><p>
 Insta Flow v1.0 — AI-Assisted Business Analytics Dashboard<br>
-Built with Streamlit • Pandas • Plotly • Gemini AI • ReportLab
+Built with Streamlit • Pandas • Plotly • Gemini AI • ReportLab<br>
+Theme: {active_theme}
 </p></div>""", unsafe_allow_html=True)
