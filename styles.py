@@ -1,0 +1,422 @@
+"""
+Insta Flow — Retro Desktop CSS Design System v2
+Polished Windows 95/XP analytics dashboard styling.
+"""
+
+
+def get_custom_css():
+    return """
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --bg-main: #d4b896;
+            --bg-panel: #f0e6d3;
+            --bg-inner: #faf5ee;
+            --bg-white: #ffffff;
+            --titlebar: #e8832a;
+            --titlebar-light: #f5a623;
+            --titlebar-dark: #cc6d1a;
+            --border: #1a1a1a;
+            --border-mid: #5a4a3a;
+            --border-light: #8b7355;
+            --text-dark: #1a1a1a;
+            --text-body: #2d2013;
+            --text-mid: #4a3728;
+            --text-muted: #6b5d4e;
+            --accent-green: #2d8b4e;
+            --accent-red: #c23b22;
+            --accent-blue: #3a6ea5;
+            --shadow: 3px 3px 0px #1a1a1a;
+            --shadow-sm: 2px 2px 0px #1a1a1a;
+            --shadow-inset: inset 1px 1px 3px rgba(0,0,0,0.12);
+            --font-display: 'VT323', monospace;
+            --font-body: 'IBM Plex Mono', 'Courier New', monospace;
+            --font-mono: 'Share Tech Mono', monospace;
+            --radius: 2px;
+        }
+
+        * { font-family: var(--font-body); }
+
+        .stApp { background-color: var(--bg-main) !important; }
+
+        #MainMenu, footer { visibility: hidden; }
+        header[data-testid="stHeader"] { background: transparent !important; }
+
+        /* ==================== RETRO WINDOW ==================== */
+        .retro-window {
+            background: var(--bg-inner);
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .retro-titlebar {
+            background: linear-gradient(180deg, var(--titlebar-light) 0%, var(--titlebar) 50%, var(--titlebar-dark) 100%);
+            border-bottom: 2px solid var(--border);
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 26px;
+        }
+        .retro-titlebar-text {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.4);
+        }
+        .retro-wc {
+            display: flex; gap: 3px;
+        }
+        .retro-wc-btn {
+            width: 16px; height: 16px;
+            border: 1.5px solid var(--border);
+            background: var(--bg-panel);
+            font-size: 9px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--border); line-height: 1; cursor: default;
+        }
+        .retro-body {
+            padding: 12px;
+        }
+
+        /* ==================== HEADER ==================== */
+        .header-bar {
+            background: var(--bg-inner);
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .header-content {
+            padding: 10px 14px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .header-title {
+            font-family: var(--font-display);
+            font-size: 2rem; color: var(--titlebar);
+            margin: 0; letter-spacing: 2px; line-height: 1;
+        }
+        .header-subtitle {
+            font-family: var(--font-body);
+            font-size: 0.7rem; color: var(--text-muted);
+            margin: 2px 0 0 0;
+        }
+
+        /* ==================== STATUS BADGES ==================== */
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 3px 10px;
+            border: 2px solid var(--border);
+            font-family: var(--font-display);
+            font-size: 0.95rem; letter-spacing: 1px;
+            box-shadow: var(--shadow-sm);
+        }
+        .status-connected { background: #b8e6b8; color: #1a5c1a; }
+        .status-disconnected { background: #f5b8b8; color: #8b1a1a; }
+        .status-disabled { background: var(--bg-panel); color: var(--text-muted); }
+
+        /* ==================== KPI CARDS ==================== */
+        .kpi-card {
+            background: var(--bg-white);
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .kpi-header {
+            background: linear-gradient(180deg, var(--titlebar-light) 0%, var(--titlebar) 100%);
+            border-bottom: 2px solid var(--border);
+            padding: 2px 8px;
+            font-family: var(--font-display);
+            font-size: 0.9rem; color: #fff;
+            letter-spacing: 1.5px;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+        }
+        .kpi-body {
+            padding: 8px 10px;
+            background: var(--bg-white);
+        }
+        .kpi-value {
+            font-family: var(--font-display);
+            font-size: 1.55rem; color: var(--text-dark);
+            letter-spacing: 1px; line-height: 1.2;
+        }
+        .kpi-delta {
+            font-family: var(--font-body);
+            font-size: 0.68rem; font-weight: 600;
+            margin-top: 2px; display: block;
+        }
+        .kpi-delta.positive { color: var(--accent-green); }
+        .kpi-delta.negative { color: var(--accent-red); }
+        .kpi-delta.neutral { color: var(--text-muted); }
+
+        /* ==================== PERIOD CARDS ==================== */
+        .period-card {
+            background: var(--bg-inner);
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .period-header {
+            background: linear-gradient(180deg, var(--titlebar-light) 0%, var(--titlebar) 100%);
+            border-bottom: 2px solid var(--border);
+            padding: 2px 8px;
+            font-family: var(--font-display);
+            font-size: 0.9rem; color: #fff;
+            letter-spacing: 1.5px;
+        }
+        .period-body {
+            padding: 8px 10px;
+        }
+        .period-value {
+            font-family: var(--font-display);
+            font-size: 1.2rem; letter-spacing: 1px;
+            color: var(--text-dark); line-height: 1.3;
+        }
+        .period-detail {
+            font-family: var(--font-body);
+            font-size: 0.72rem; color: var(--text-mid);
+            margin-top: 2px;
+        }
+
+        /* ==================== AI INSIGHT BOX ==================== */
+        .ai-insight-box {
+            background: var(--bg-white);
+            border: 2px solid var(--border-mid);
+            border-radius: var(--radius);
+            padding: 10px 12px;
+            margin: 6px 0;
+            box-shadow: var(--shadow-inset);
+        }
+        .ai-insight-box p, .ai-insight-box li {
+            color: var(--text-body) !important;
+            font-family: var(--font-body) !important;
+            font-size: 0.78rem !important;
+            line-height: 1.65 !important;
+            margin: 0 !important;
+        }
+
+        /* ==================== CHAT ==================== */
+        .chat-container {
+            max-height: 260px;
+            overflow-y: auto;
+            padding: 4px;
+            background: var(--bg-white);
+            border: 2px solid var(--border-mid);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-inset);
+        }
+        .chat-q {
+            background: var(--bg-panel);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 6px 10px; margin: 4px 0;
+            font-family: var(--font-body);
+            font-size: 0.76rem; color: var(--text-dark);
+        }
+        .chat-a {
+            background: #fffde7;
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 6px 10px; margin: 4px 0;
+            font-family: var(--font-body);
+            font-size: 0.76rem; color: var(--text-body);
+            line-height: 1.5;
+        }
+
+        /* ==================== SIDEBAR ==================== */
+        section[data-testid="stSidebar"] {
+            background: var(--bg-panel) !important;
+            border-right: 2.5px solid var(--border) !important;
+        }
+        section[data-testid="stSidebar"] .stMarkdown h3,
+        .sidebar-heading {
+            font-family: var(--font-display) !important;
+            font-size: 1.05rem !important;
+            color: var(--titlebar) !important;
+            letter-spacing: 1.5px !important;
+            text-transform: uppercase !important;
+            border-bottom: 2px solid var(--border-light) !important;
+            padding-bottom: 3px !important;
+            margin-bottom: 6px !important;
+            margin-top: 10px !important;
+        }
+
+        /* ==================== BUTTONS ==================== */
+        .stButton > button {
+            font-family: var(--font-display) !important;
+            font-size: 0.95rem !important;
+            letter-spacing: 1px !important;
+            border: 2px solid var(--border) !important;
+            border-radius: var(--radius) !important;
+            background: var(--bg-panel) !important;
+            color: var(--text-dark) !important;
+            box-shadow: var(--shadow-sm) !important;
+            padding: 2px 4px !important;
+            min-height: 30px !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            transition: all 0.05s ease !important;
+        }
+        .stButton > button:hover {
+            background: #e8d5c0 !important;
+        }
+        .stButton > button:active {
+            box-shadow: inset 2px 2px 0px rgba(0,0,0,0.2) !important;
+            transform: translate(1px, 1px) !important;
+        }
+
+        /* Sidebar buttons — smaller font to prevent wrapping */
+        section[data-testid="stSidebar"] .stButton > button {
+            font-size: 0.82rem !important;
+            padding: 2px 3px !important;
+            min-height: 28px !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        /* Primary button = active selection (orange) */
+        .stButton > button[kind="primary"],
+        .stButton > button[data-testid="stBaseButton-primary"] {
+            background: var(--titlebar) !important;
+            color: #fff !important;
+            border: 2px solid var(--border) !important;
+            box-shadow: inset 2px 2px 0px rgba(0,0,0,0.15) !important;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+        }
+        .stButton > button[kind="primary"]:hover,
+        .stButton > button[data-testid="stBaseButton-primary"]:hover {
+            background: var(--titlebar-dark) !important;
+            color: #fff !important;
+        }
+
+        /* ==================== INPUTS ==================== */
+        .stTextInput > div > div > input {
+            font-family: var(--font-body) !important;
+            font-size: 0.78rem !important;
+            border: 2px solid var(--border) !important;
+            border-radius: var(--radius) !important;
+            background: var(--bg-white) !important;
+            color: var(--text-dark) !important;
+            box-shadow: var(--shadow-inset) !important;
+        }
+
+        /* ==================== EMPTY STATE ==================== */
+        .empty-state {
+            text-align: center; padding: 36px 20px;
+            background: var(--bg-inner);
+            border: 2.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .empty-state-icon { font-size: 2.5rem; margin-bottom: 6px; }
+        .empty-state-text {
+            font-family: var(--font-display);
+            font-size: 1.6rem; color: var(--titlebar);
+            letter-spacing: 2px; margin-bottom: 4px;
+        }
+        .empty-state-hint {
+            font-family: var(--font-body);
+            font-size: 0.78rem; color: var(--text-mid);
+        }
+
+        /* ==================== DATASET INFO ==================== */
+        .dataset-info {
+            background: var(--bg-white);
+            border: 2px solid var(--border-mid);
+            border-radius: var(--radius);
+            padding: 8px 10px;
+            box-shadow: var(--shadow-inset);
+        }
+        .ds-row {
+            display: flex; justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px dashed var(--border-light);
+            font-size: 0.76rem;
+        }
+        .ds-row:last-child { border-bottom: none; }
+        .ds-label { color: var(--text-muted); font-weight: 500; }
+        .ds-value { color: var(--text-dark); font-weight: 700; }
+
+        /* ==================== DISCLAIMER ==================== */
+        .disclaimer {
+            font-family: var(--font-body); font-size: 0.62rem;
+            color: var(--text-muted); font-style: italic;
+            padding: 3px 0; line-height: 1.4;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .retro-footer {
+            text-align: center; padding: 10px 0 6px;
+            border-top: 2px solid var(--border-light);
+            margin-top: 12px;
+        }
+        .retro-footer p {
+            font-family: var(--font-body);
+            font-size: 0.65rem; color: var(--text-muted); margin: 0;
+        }
+
+        /* ==================== METRIC WIDGET ==================== */
+        div[data-testid="stMetric"] {
+            background: var(--bg-inner);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 6px; box-shadow: var(--shadow-sm);
+        }
+
+        /* ==================== DOWNLOAD BUTTON ==================== */
+        .stDownloadButton > button {
+            font-family: var(--font-display) !important;
+            font-size: 0.95rem !important;
+            letter-spacing: 1px !important;
+            border: 2px solid var(--border) !important;
+            border-radius: var(--radius) !important;
+            background: #b8e6b8 !important;
+            color: var(--text-dark) !important;
+            box-shadow: var(--shadow-sm) !important;
+        }
+
+        /* ==================== EXPANDER ==================== */
+        .streamlit-expanderHeader {
+            font-family: var(--font-display) !important;
+            font-size: 1rem !important;
+            letter-spacing: 1px;
+            border: 2px solid var(--border) !important;
+            border-radius: var(--radius) !important;
+            background: var(--bg-panel) !important;
+            color: var(--text-dark) !important;
+        }
+
+        /* ==================== SCROLLBAR ==================== */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: var(--bg-panel); border-left: 1px solid var(--border-light); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #c9b89c, #a89070); border: 1px solid var(--border); }
+
+        /* ==================== RADIO FIX ==================== */
+        .stRadio > div > label {
+            font-family: var(--font-body) !important;
+            font-size: 0.78rem !important;
+            color: var(--text-dark) !important;
+        }
+
+        /* ==================== FILE UPLOADER ==================== */
+        section[data-testid="stFileUploader"] {
+            border: 2px dashed var(--border-light) !important;
+            border-radius: var(--radius) !important;
+            background: var(--bg-inner) !important;
+        }
+
+        /* ==================== SEPARATOR ==================== */
+        .retro-sep {
+            border: none;
+            border-top: 2px solid var(--border-light);
+            margin: 8px 0;
+        }
+    </style>
+    """
