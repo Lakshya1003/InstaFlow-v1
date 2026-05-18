@@ -83,9 +83,11 @@ class DataProcessor:
         self.categorical_columns = []
         for col in self.df.columns:
             if col in self.date_columns or col in self.numeric_columns: continue
-            if self.df[col].dtype == 'object':
-                if self.df[col].nunique() / len(self.df) < 0.5 and self.df[col].nunique() <= 200:
-                    self.categorical_columns.append(col)
+            
+            # Use unique ratio and max unique values instead of strict dtype check, 
+            # as Pandas 2.x string/category dtypes vary across environments (e.g. Streamlit Cloud)
+            if self.df[col].nunique() / len(self.df) < 0.5 and self.df[col].nunique() <= 200:
+                self.categorical_columns.append(col)
 
     def _extract_metadata(self):
         dmin = self.df[self.primary_date_col].min()
