@@ -88,9 +88,11 @@ Date,Region,Product,Revenue,Quantity
 
 ---
 
+---
 
 ## 📊 Direct use **[Instaflow v1](https://instaflow-v1.streamlit.app/)**
 
+---
 ## 💻 How to Run
 
 ### Prerequisites
