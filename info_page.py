@@ -4,11 +4,19 @@ def render_info_page():
     # ── Retro HTML helpers ──
     WC = '<div class="retro-wc"><div class="retro-wc-btn">─</div><div class="retro-wc-btn">□</div><div class="retro-wc-btn">✕</div></div>'
 
-    def rwin_open(title, icon=""):
-        return f'<div class="retro-window"><div class="retro-titlebar"><span class="retro-titlebar-text">{icon} {title}</span>{WC}</div><div class="retro-body" style="padding: 24px;">'
-
-    def rwin_close():
-        return '</div></div>'
+    def render_panel(title, icon, content_html):
+        html = f'''
+        <div class="retro-window">
+            <div class="retro-titlebar">
+                <span class="retro-titlebar-text">{icon} {title}</span>{WC}
+            </div>
+            <div class="retro-body" style="padding: 24px; color: var(--text-body);">
+                {content_html}
+            </div>
+        </div>
+        <div style="margin-bottom: 20px;"></div>
+        '''
+        st.markdown(html, unsafe_allow_html=True)
 
     # ── HEADER ──
     st.markdown(f"""
@@ -42,81 +50,82 @@ def render_info_page():
 
     with c1:
         # SECTION 2 — WHAT THIS SOFTWARE DOES
-        st.markdown(rwin_open("WHAT THIS SOFTWARE DOES", "⚙️"), unsafe_allow_html=True)
-        st.markdown("""
-        **Insight Flow** is a lightweight analytical utility designed to reduce time spent in spreadsheets. It enables you to:
-        * Generate visual analytics instantly.
-        * Interact with structured data conversationally using AI.
-        * Explore KPIs, trends, and growth metrics.
-        * Export AI-assisted PDF executive reports.
-
-        **Note:** This is a temporary session workflow. There is no permanent storage.
+        render_panel("WHAT THIS SOFTWARE DOES", "⚙️", """
+        <p><b>Insight Flow</b> is a lightweight analytical utility designed to reduce time spent in spreadsheets. It enables you to:</p>
+        <ul style="margin-left: 20px; line-height: 1.6;">
+            <li>Generate visual analytics instantly.</li>
+            <li>Interact with structured data conversationally using AI.</li>
+            <li>Explore KPIs, trends, and growth metrics.</li>
+            <li>Export AI-assisted PDF executive reports.</li>
+        </ul>
+        <p style="margin-top: 15px;"><b>Note:</b> This is a temporary session workflow. There is no permanent storage.</p>
         
-        <div style="padding: 10px; border-left: 4px solid var(--titlebar); background: var(--bg-inner); margin-top: 15px;">
+        <div style="padding: 12px; border-left: 4px solid var(--titlebar); background: var(--bg-inner); margin-top: 15px; border-radius: 4px; color: var(--text-dark);">
             <b>IMPORTANT:</b> This software is designed for lightweight exploratory analytical visualization, not enterprise-scale forecasting.
         </div>
-        """, unsafe_allow_html=True)
-        st.markdown(rwin_close(), unsafe_allow_html=True)
+        """)
 
         # SECTION 4 — AI USAGE POLICY
-        st.markdown(rwin_open("AI SYSTEM LIMITATIONS", "🤖"), unsafe_allow_html=True)
-        st.markdown("""
-        The integrated Gemini AI operates under strict boundary conditions:
-        * **Dataset-Constrained:** AI responses are isolated to the scope of your uploaded CSV.
-        * **Rejection Protocol:** Unsupported questions (e.g., weather, sports, politics, general knowledge) will be rejected.
-        * **No External Web Access:** The AI does not browse the unrestricted internet to answer queries.
+        render_panel("AI SYSTEM LIMITATIONS", "🤖", """
+        <p>The integrated Gemini AI operates under strict boundary conditions:</p>
+        <ul style="margin-left: 20px; line-height: 1.6;">
+            <li><b>Dataset-Constrained:</b> AI responses are isolated to the scope of your uploaded CSV.</li>
+            <li><b>Rejection Protocol:</b> Unsupported questions (e.g., weather, sports, politics, general knowledge) will be rejected.</li>
+            <li><b>No External Web Access:</b> The AI does not browse the unrestricted internet to answer queries.</li>
+        </ul>
 
-        <div style="padding: 10px; border-left: 4px solid var(--accent-red); background: var(--bg-inner); margin-top: 15px;">
+        <div style="padding: 12px; border-left: 4px solid var(--accent-red); background: var(--bg-inner); margin-top: 15px; border-radius: 4px; color: var(--text-dark);">
             <b>CRITICAL:</b> Gemini assists in interpretation but does NOT replace deterministic mathematical analytics calculations. Always verify critical business insights.
         </div>
-        """, unsafe_allow_html=True)
-        st.markdown(rwin_close(), unsafe_allow_html=True)
+        """)
 
         # SECTION 6 — PRIVACY & SESSION POLICY
-        st.markdown(rwin_open("STATELESS PRIVACY ARCHITECTURE", "🛡️"), unsafe_allow_html=True)
-        st.markdown("""
-        Insight Flow is built on a strict privacy-first foundation:
-        * **No Permanent Storage:** Uploaded datasets remain entirely temporary and in-memory.
-        * **Ephemeral Sessions:** All data, API keys, and AI conversations disappear immediately after a browser refresh or session end.
-        * **Local API Keys:** Your Gemini API key is used strictly for the active session and is not stored in any database.
-        
-        This architecture ensures absolute business privacy and security for your sensitive data logs.
-        """, unsafe_allow_html=True)
-        st.markdown(rwin_close(), unsafe_allow_html=True)
+        render_panel("STATELESS PRIVACY ARCHITECTURE", "🛡️", """
+        <p>Insight Flow is built on a strict privacy-first foundation:</p>
+        <ul style="margin-left: 20px; line-height: 1.6;">
+            <li><b>No Permanent Storage:</b> Uploaded datasets remain entirely temporary and in-memory.</li>
+            <li><b>Ephemeral Sessions:</b> All data, API keys, and AI conversations disappear immediately after a browser refresh or session end.</li>
+            <li><b>Local API Keys:</b> Your Gemini API key is used strictly for the active session and is not stored in any database.</li>
+        </ul>
+        <p style="margin-top: 15px;">This architecture ensures absolute business privacy and security for your sensitive data logs.</p>
+        """)
 
         # SECTION 7 — SOFTWARE LIMITATIONS
-        st.markdown(rwin_open("SOFTWARE LIMITATIONS", "⚠️"), unsafe_allow_html=True)
-        st.markdown("""
-        * Designed for lightweight, exploratory analytics.
-        * **Not** enterprise-scale data infrastructure.
-        * **Not** a real-time streaming platform.
-        * **Not** a predictive forecasting engine.
-        * **Not** a replacement for full-scale Enterprise BI systems (e.g., Tableau, PowerBI).
-        """, unsafe_allow_html=True)
-        st.markdown(rwin_close(), unsafe_allow_html=True)
+        render_panel("SOFTWARE LIMITATIONS", "⚠️", """
+        <ul style="margin-left: 20px; line-height: 1.6;">
+            <li>Designed for lightweight, exploratory analytics.</li>
+            <li><b>Not</b> enterprise-scale data infrastructure.</li>
+            <li><b>Not</b> a real-time streaming platform.</li>
+            <li><b>Not</b> a predictive forecasting engine.</li>
+            <li><b>Not</b> a replacement for full-scale Enterprise BI systems (e.g., Tableau, PowerBI).</li>
+        </ul>
+        """)
 
     with c2:
         # SECTION 3 — CSV FORMATTING GUIDE
-        st.markdown(rwin_open("CSV REQUIREMENTS & FORMATTING", "📄"), unsafe_allow_html=True)
-        st.markdown("""
-        For the system to automatically extract KPIs and build dashboards, your CSV must meet these structural requirements:
+        render_panel("CSV REQUIREMENTS & FORMATTING", "📄", """
+        <p>For the system to automatically extract KPIs and build dashboards, your CSV must meet these structural requirements:</p>
 
-        **Required Columns:**
-        1. At least one **Date** column.
-        2. At least one **Numeric** column (e.g., Revenue, Quantity).
+        <p style="margin-top:15px;"><b>Required Columns:</b></p>
+        <ol style="margin-left: 20px; line-height: 1.6;">
+            <li>At least one <b>Date</b> column.</li>
+            <li>At least one <b>Numeric</b> column (e.g., Revenue, Quantity).</li>
+        </ol>
 
-        **Recommended Columns:**
-        * Categorical columns (e.g., Region, Product, Status) for breakdown views.
+        <p style="margin-top:15px;"><b>Recommended Columns:</b></p>
+        <ul style="margin-left: 20px; line-height: 1.6;">
+            <li>Categorical columns (e.g., Region, Product, Status) for breakdown views.</li>
+        </ul>
 
-        **Supported Date Formats:**
-        The system automatically attempts flexible parsing for:
-        `YYYY-MM-DD` | `MM/DD/YYYY` | `DD-MM-YYYY`
-        """)
+        <p style="margin-top:15px;"><b>Supported Date Formats:</b><br>
+        The system automatically attempts flexible parsing for:<br>
+        <code style="background: var(--bg-inner); padding: 2px 6px; border-radius: 4px; color: var(--text-dark);">YYYY-MM-DD</code> | 
+        <code style="background: var(--bg-inner); padding: 2px 6px; border-radius: 4px; color: var(--text-dark);">MM/DD/YYYY</code> | 
+        <code style="background: var(--bg-inner); padding: 2px 6px; border-radius: 4px; color: var(--text-dark);">DD-MM-YYYY</code></p>
 
-        st.markdown("""
-        **Example Valid Structure:**
+        <p style="margin-top:15px;"><b>Example Valid Structure:</b></p>
         <div style="overflow-x:auto; margin-top:10px; margin-bottom:15px;">
-            <table style="width:100%; border-collapse:collapse; font-family:monospace; font-size:0.9rem; background:var(--bg-white); border: 2px solid var(--border);">
+            <table style="width:100%; border-collapse:collapse; font-family:monospace; font-size:0.9rem; background:var(--bg-white); border: 2px solid var(--border); color: var(--text-dark);">
                 <thead>
                     <tr style="background:var(--bg-inner); border-bottom:2px solid var(--border);">
                         <th style="padding:8px; border-right:1px solid var(--border-light); text-align:left;">Date</th>
@@ -151,31 +160,26 @@ def render_info_page():
                 </tbody>
             </table>
         </div>
-        """, unsafe_allow_html=True)
 
-        st.markdown("""
-        **✅ Supported Data:** Sales datasets, E-commerce logs, Business KPIs, Website analytics, Time-series data.
-        <br>**❌ Unsupported Data:** Unstructured text, PDFs, Images, Scanned documents, Corrupted CSV files.
-        """, unsafe_allow_html=True)
-        st.markdown(rwin_close(), unsafe_allow_html=True)
+        <p><b>✅ Supported Data:</b> Sales datasets, E-commerce logs, Business KPIs, Website analytics, Time-series data.</p>
+        <p><b>❌ Unsupported Data:</b> Unstructured text, PDFs, Images, Scanned documents, Corrupted CSV files.</p>
+        """)
 
         # SECTION 5 — TERMS & CONDITIONS
-        st.markdown(rwin_open("TERMS & CONDITIONS", "⚖️"), unsafe_allow_html=True)
-        st.markdown("""
-        By using Insight Flow, you agree to the following lightweight software terms:
-        * **As-Is Provision:** This tool is provided "as-is" without any warranty or performance guarantees.
-        * **Verification:** Analytical and AI-generated results should be independently verified before making critical business decisions.
-        * **User Responsibility:** You are solely responsible for the legality and content of the datasets you upload.
-        * **API Usage:** You are responsible for any external billing related to your personal Gemini API key.
-        * **Compliance:** Users must comply with applicable data protection laws.
-        """, unsafe_allow_html=True)
-        st.markdown(rwin_close(), unsafe_allow_html=True)
+        render_panel("TERMS & CONDITIONS", "⚖️", """
+        <p>By using Insight Flow, you agree to the following lightweight software terms:</p>
+        <ul style="margin-left: 20px; line-height: 1.6;">
+            <li><b>As-Is Provision:</b> This tool is provided "as-is" without any warranty or performance guarantees.</li>
+            <li><b>Verification:</b> Analytical and AI-generated results should be independently verified before making critical business decisions.</li>
+            <li><b>User Responsibility:</b> You are solely responsible for the legality and content of the datasets you upload.</li>
+            <li><b>API Usage:</b> You are responsible for any external billing related to your personal Gemini API key.</li>
+            <li><b>Compliance:</b> Users must comply with applicable data protection laws.</li>
+        </ul>
+        """)
 
     # ── CHECKLIST & START BUTTON ──
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown(rwin_open("BEFORE YOU CONTINUE CHECKLIST", "✅"), unsafe_allow_html=True)
-    
-    st.markdown("""
+    render_panel("BEFORE YOU CONTINUE CHECKLIST", "✅", """
     <div style="font-family: monospace; font-size: 1.1rem; line-height: 1.8;">
         ☑ My dataset contains a Date column.<br>
         ☑ My dataset contains numerical metrics.<br>
@@ -183,18 +187,15 @@ def render_info_page():
         ☑ I understand Gemini API usage is my responsibility.<br>
         ☑ I understand unsupported non-dataset queries may be rejected.
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
-    st.markdown("<br>", unsafe_allow_html=True)
     cc1, cc2, cc3 = st.columns([1, 2, 1])
     with cc2:
         if st.button("🚀 I UNDERSTAND — CONTINUE TO INSIGHT FLOW", use_container_width=True, type="primary"):
             st.session_state['show_info_page'] = False
             st.rerun()
 
-    st.markdown(rwin_close(), unsafe_allow_html=True)
-
     # ── Footer ──
-    st.markdown(f"""<div class="retro-footer"><p>
+    st.markdown(f"""<div class="retro-footer" style="margin-top: 30px;"><p>
     Insight Flow v1.0 — System Documentation & Onboarding Utility
     </p></div>""", unsafe_allow_html=True)
