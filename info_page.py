@@ -1,16 +1,18 @@
 import streamlit as st
+import textwrap
 
 def render_info_page():
     # ── Retro HTML helpers ──
     WC = '<div class="retro-wc"><div class="retro-wc-btn">─</div><div class="retro-wc-btn">□</div><div class="retro-wc-btn">✕</div></div>'
 
     def render_panel(title, icon, content_html):
+        clean_html = textwrap.dedent(content_html)
         html = f"""<div class="retro-window">
 <div class="retro-titlebar">
 <span class="retro-titlebar-text">{icon} {title}</span>{WC}
 </div>
 <div class="retro-body" style="padding: 24px; color: var(--text-body);">
-{content_html}
+{clean_html}
 </div>
 </div>
 <div style="margin-bottom: 20px;"></div>"""
