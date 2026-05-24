@@ -16,6 +16,7 @@ from chart_builder import (bar_chart, line_chart, area_chart, pie_chart, donut_c
                            CHART_REGISTRY, set_chart_theme)
 from gemini_handler import GeminiHandler
 from pdf_generator import generate_pdf_report
+from info_page import render_info_page
 
 # ─── Page Config ───
 st.set_page_config(page_title="Insight Flow — Business Analytics", page_icon="📊",
@@ -31,6 +32,7 @@ DEFAULTS = {
     'selected_metric': None, 'selected_category': None,
     'env_auto_connected': False,
     'active_theme': DEFAULT_THEME,
+    'show_info_page': False,
 }
 for k, v in DEFAULTS.items():
     if k not in st.session_state:
@@ -97,6 +99,13 @@ def btn_group(options, key, cols_per_row=3):
 
 
 with st.sidebar:
+    # ══════════ ONBOARDING ══════════
+    if st.button("ℹ️ INFO BEFORE YOU START", use_container_width=True, type="secondary"):
+        st.session_state['show_info_page'] = True
+        st.rerun()
+
+    st.markdown('<hr style="border:1px solid rgba(0,0,0,0.15);margin:6px 0;">', unsafe_allow_html=True)
+
     # ══════════ THEME SELECTOR ══════════
     st.markdown("### 🎨 Appearance")
     current_theme = st.session_state['active_theme']
@@ -247,6 +256,10 @@ CHART_MAP = {
 # ═══════════════════════════════════════
 #  MAIN CONTENT
 # ═══════════════════════════════════════
+
+if st.session_state['show_info_page']:
+    render_info_page()
+    st.stop()
 
 # ── HEADER ──
 st.markdown(f"""
