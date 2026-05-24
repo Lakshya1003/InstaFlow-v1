@@ -1,4 +1,4 @@
-# ENTERPRISE SYSTEM REPORT: Insta Flow v1.0
+# ENTERPRISE SYSTEM REPORT: Insight Flow v1.0
 **SYSTEM CLASSIFICATION:** BUSINESS INTELLIGENCE (BI) & DECISION SUPPORT SYSTEM  
 **ARCHITECTURE:** FULLY PYTHON-DRIVEN / STATELESS MEMORY  
 **STATUS:** PRODUCTION-READY  
@@ -14,7 +14,7 @@ Modern business analysts, managers, and non-technical decision-makers face incre
 Engineer an enterprise-grade, fully Python-driven analytics platform that autonomously parses structured data, generates real-time interactive visualizations, and embeds a context-constrained AI assistant. The system must operate without requiring Node.js, React, or databases, ensuring zero-configuration deployment. Furthermore, the system must employ a highly polished, retro-desktop aesthetic with dynamic theming to maximize readability and reduce cognitive load.
 
 ### 🔹 ACTION
-Developed **Insta Flow**, an architecture integrating Streamlit, Plotly, Pandas, and the Google Gemini API.
+Developed **Insight Flow**, an architecture integrating Streamlit, Plotly, Pandas, and the Google Gemini API.
 - Implemented `DataProcessor` for automatic type inference and missing value handling.
 - Built `AnalyticsEngine` for dynamic metric calculations, temporal aggregations, and correlation mapping.
 - Integrated `GeminiHandler` to provide strict, context-bound AI querying and automated executive summaries.
@@ -22,7 +22,7 @@ Developed **Insta Flow**, an architecture integrating Streamlit, Plotly, Pandas,
 - Engineered `pdf_generator` leveraging ReportLab to compile session analytics, KPIs, and complete AI conversational logs into professional executive reports.
 
 ### 🔹 RESULT
-A robust, stateless, AI-powered analytics terminal capable of instantly processing large CSV datasets. Insta Flow reduces time-to-insight from hours to seconds. It provides comprehensive visual dashboards, conversational AI data probing, and one-click PDF report generation, all while operating in a highly performant, privacy-first, serverless-ready architecture.
+A robust, stateless, AI-powered analytics terminal capable of instantly processing large CSV datasets. Insight Flow reduces time-to-insight from hours to seconds. It provides comprehensive visual dashboards, conversational AI data probing, and one-click PDF report generation, all while operating in a highly performant, privacy-first, serverless-ready architecture.
 
 ---
 
@@ -69,7 +69,7 @@ Real-time UI transformation across 6 standardized enterprise themes without page
 ## 4. UNIQUE SELLING PROPOSITIONS (USPs)
 
 - **Zero-Friction Deployment:** 100% Python stack. No frontend build processes (npm, webpack) or database schemas required.
-- **Context-Locked AI:** Unlike general LLM wrappers, Insta Flow actively restricts the AI to the bounds of the uploaded dataset, ensuring absolute relevance and business safety.
+- **Context-Locked AI:** Unlike general LLM wrappers, Insight Flow actively restricts the AI to the bounds of the uploaded dataset, ensuring absolute relevance and business safety.
 - **Theme-Synchronized Visuals:** A rare architectural feature in Streamlit; Plotly charts perfectly mimic the CSS environment (e.g., Dark mode charts in Dark mode UI) without jarring visual clashes.
 - **Nostalgic Yet Powerful UI:** Reduces visual fatigue through a strictly defined "Retro Desktop" architecture, prioritizing high-utility application design over modern UI bloat.
 - **Stateless Privacy:** Sessions are strictly ephemeral. Once the window is closed, all data and chat histories are wiped entirely from memory, natively meeting strict enterprise data handling policies.

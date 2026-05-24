@@ -1,5 +1,5 @@
 """
-Insta Flow — Data Processor Module
+Insight Flow — Data Processor Module
 Handles CSV upload validation, parsing, column detection, and metadata extraction.
 """
 import pandas as pd

@@ -109,6 +109,6 @@ def create_project_pdf(project_dir, output_pdf_path):
     print(f"PDF successfully generated at: {output_pdf_path}")
 
 if __name__ == "__main__":
-    project_dir = r"f:\6th sem minor\InstaFlow-v1"
+    project_dir = r"f:\6th sem minor\InsightFlow-v1"
     output_pdf = os.path.join(project_dir, "Project_Source_Code.pdf")
     create_project_pdf(project_dir, output_pdf)

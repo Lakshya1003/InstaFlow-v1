@@ -1,5 +1,5 @@
 """
-Insta Flow — Dynamic CSS Design System v3
+Insight Flow — Dynamic CSS Design System v3
 Generates theme-aware CSS from theme_engine definitions.
 """
 from theme_engine import get_theme

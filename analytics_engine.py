@@ -1,5 +1,5 @@
 """
-Insta Flow — Analytics Engine
+Insight Flow — Analytics Engine
 Handles KPI calculations, trend analysis, growth metrics, and aggregations.
 All computations are deterministic — Gemini never calculates metrics.
 """

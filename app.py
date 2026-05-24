@@ -1,5 +1,5 @@
 """
-Insta Flow — AI-Assisted Business Analytics Dashboard
+Insight Flow — AI-Assisted Business Analytics Dashboard
 Retro Desktop Edition v3 — Theme engine + AI chat PDF export.
 """
 import streamlit as st
@@ -18,7 +18,7 @@ from gemini_handler import GeminiHandler
 from pdf_generator import generate_pdf_report
 
 # ─── Page Config ───
-st.set_page_config(page_title="Insta Flow — Business Analytics", page_icon="📊",
+st.set_page_config(page_title="Insight Flow — Business Analytics", page_icon="📊",
                    layout="wide", initial_sidebar_state="expanded")
 
 # ─── Session State ───
@@ -252,7 +252,7 @@ CHART_MAP = {
 st.markdown(f"""
 <div class="header-bar">
     <div class="retro-titlebar">
-        <span class="retro-titlebar-text">📊 Insta Flow v1.0</span>
+        <span class="retro-titlebar-text">📊 Insight Flow v1.0</span>
         <div style="display:flex;align-items:center;gap:8px;">
             {status_html()} {WC}
         </div>
@@ -260,7 +260,7 @@ st.markdown(f"""
     <div class="header-content">
         <span style="font-size:1.6rem;">📊</span>
         <div>
-            <p class="header-title">Insta Flow</p>
+            <p class="header-title">Insight Flow</p>
             <p class="header-subtitle">AI-assisted business analytics dashboard for CSV datasets</p>
         </div>
     </div>
@@ -271,7 +271,7 @@ if st.session_state['df'] is None:
     st.markdown("""
     <div class="empty-state">
         <div class="empty-state-icon">📊</div>
-        <p class="empty-state-text">Welcome to Insta Flow</p>
+        <p class="empty-state-text">Welcome to Insight Flow</p>
         <p class="empty-state-hint">Upload a CSV dataset from the sidebar to begin analytics.</p>
         <p class="empty-state-hint" style="margin-top:4px;">Connect your Gemini API key for AI-powered insights.</p>
     </div>""", unsafe_allow_html=True)
@@ -492,7 +492,7 @@ with re2:
                     meta['categorical_columns'], all_kpis, all_summary, ai_sum, figs,
                     chat_history=chat_hist if chat_hist else None)
                 st.download_button("⬇️ Download", data=pdf_buf,
-                    file_name=f"InstaFlow_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
+                    file_name=f"InsightFlow_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
                     mime="application/pdf", use_container_width=True)
                 st.success("✓ Report ready!")
             except Exception as e:
@@ -501,7 +501,7 @@ st.markdown(rwin_close(), unsafe_allow_html=True)
 
 # ── Footer ──
 st.markdown(f"""<div class="retro-footer"><p>
-Insta Flow v1.0 — AI-Assisted Business Analytics Dashboard<br>
+Insight Flow v1.0 — AI-Assisted Business Analytics Dashboard<br>
 Built with Streamlit • Pandas • Plotly • Gemini AI • ReportLab<br>
 Theme: {active_theme}
 </p></div>""", unsafe_allow_html=True)

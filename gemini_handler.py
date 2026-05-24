@@ -1,5 +1,5 @@
 """
-Insta Flow — Gemini AI Handler
+Insight Flow — Gemini AI Handler
 Context-constrained AI interaction with .env persistence and gemini-2.5-flash.
 """
 import os
@@ -10,7 +10,7 @@ load_dotenv()
 
 ENV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
 
-SYSTEM_PROMPT = """You are the Insta Flow AI Analytics Assistant embedded in a business analytics dashboard.
+SYSTEM_PROMPT = """You are the Insight Flow AI Analytics Assistant embedded in a business analytics dashboard.
 
 STRICT RULES:
 1. You may ONLY discuss the uploaded dataset, its metrics, KPIs, trends, and analytics.

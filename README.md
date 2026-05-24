@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📊 Insta Flow
+# 📊 Insight Flow
 
 **AI-Assisted Business Analytics Dashboard**
 
@@ -24,7 +24,7 @@
 ---
 
 ## 🚀 Overview
-Insta Flow is a fully Python-driven analytics platform that allows users to upload structured CSV business datasets, visualize insights through interactive dashboards, and interact with a context-constrained Gemini AI assistant. 
+Insight Flow is a fully Python-driven analytics platform that allows users to upload structured CSV business datasets, visualize insights through interactive dashboards, and interact with a context-constrained Gemini AI assistant. 
 
 It features a professional, retro desktop-inspired aesthetic with dynamic UI theme switching and the ability to export complete analytics sessions—including AI chat history—to a stylized PDF report.
 
@@ -49,7 +49,7 @@ It features a professional, retro desktop-inspired aesthetic with dynamic UI the
 ## 📂 Folder Structure
 
 ```text
-InstaFlow-v1/
+InsightFlow-v1/
 ├── app.py                   # Main Streamlit application
 ├── analytics_engine.py      # Business logic & KPI calculations
 ├── chart_builder.py         # Dynamic Plotly visualizations
@@ -69,7 +69,7 @@ InstaFlow-v1/
 
 ## 📊 CSV Data Format Requirements
 
-Insta Flow works best with standard structured business or time-series data (e.g., sales logs, website analytics, user data, etc.). 
+Insight Flow works best with standard structured business or time-series data (e.g., sales logs, website analytics, user data, etc.). 
 
 To ensure the system works as intended, your CSV **must** contain:
 1. 🗓️ **At least one Date column:** (e.g., `Date`, `Timestamp`, `Created_At`). The system is quite flexible and parses most standard date formats (like `YYYY-MM-DD`, `MM/DD/YYYY`).
@@ -90,7 +90,7 @@ Date,Region,Product,Revenue,Quantity
 
 ---
 
-## 📊 Direct use **[Instaflow v1](https://instaflow-v1.streamlit.app/)**
+## 📊 Direct use **[InsightFlow v1](https://insightflow-v1.streamlit.app/)**
 
 ---
 ## 💻 How to Run
@@ -103,8 +103,8 @@ Date,Region,Product,Revenue,Quantity
 
 1. Clone the repository and navigate to the project directory:
    ```bash
-   git clone https://github.com/yourusername/InstaFlow-v1.git
-   cd InstaFlow-v1
+   git clone https://github.com/yourusername/InsightFlow-v1.git
+   cd InsightFlow-v1
    ```
 
 2. Install the required dependencies:

@@ -1,5 +1,5 @@
 """
-Insta Flow — Theme Engine
+Insight Flow — Theme Engine
 Centralized theme configuration with CSS variable generation and Plotly sync.
 """
 

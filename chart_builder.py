@@ -1,5 +1,5 @@
 """
-Insta Flow — Chart Builder Module v3
+Insight Flow — Chart Builder Module v3
 Theme-aware Plotly charts — colors sync with active dashboard theme.
 """
 import plotly.express as px
