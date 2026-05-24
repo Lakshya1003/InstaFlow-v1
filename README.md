@@ -88,9 +88,11 @@ Date,Region,Product,Revenue,Quantity
 
 ---
 
+## 🏢 Our Services  **[InsightFlow services](https://insightflowv1.netlify.app/)**
+
 ---
 
-## 📊 Direct use **[InsightFlow v1](https://insightflow-v1.streamlit.app/)**
+## 📊 Direct use  **[InsightFlow v1](https://insightflow-v1.streamlit.app/)**
 
 ---
 ## 💻 How to Run
